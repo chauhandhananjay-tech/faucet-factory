@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | Somnath Engineering</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .loader {
+      border-top-color: #2563eb;
+      animation: spinner 1s linear infinite;
+    }
+    @keyframes spinner {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-slate-900 flex items-center justify-center min-h-screen p-4">
+
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 p-8 md:p-10 relative">
+    
+    <!-- Logo & Header -->
+    <div class="text-center mb-6">
+      <img src="./img/logo.png" alt="Logo" class="h-14 mx-auto mb-3 object-contain" onerror="this.style.display='none'">
+      <h2 id="portalTitle" class="text-2xl font-bold text-slate-800">Admin Control Panel</h2>
+      <p id="portalSubtitle" class="text-slate-400 text-sm mt-1">Somnath Engineering Dashboard Login</p>
+    </div>
+
+    <!-- ==================== 1. LOGIN FORM ==================== -->
+    <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1">Admin Username</label>
+        <input type="text" id="loginUser" placeholder="Enter username" class="w-full border border-slate-200 p-3.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-800" required />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
+        <!-- Wrapper container for relative icon positioning -->
+        <div class="relative">
+          <input type="password" id="loginPass" placeholder="••••••••" class="w-full border border-slate-200 p-3.5 pr-12 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-800" required />
+          <button type="button" onclick="togglePassword('loginPass', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 focus:outline-none text-sm font-bold">
+            SHOW
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-blue-500/20 transition-all mt-2">
+        Sign In
+      </button>
+      <div class="flex justify-between items-center text-xs pt-2">
+        <button type="button" onclick="switchView('forgot')" class="text-blue-600 hover:underline font-medium">Forgot Password?</button>
+        <button type="button" onclick="switchView('signup')" class="text-slate-500 hover:text-blue-600 font-bold">Create Account</button>
+      </div>
+    </form>
+
+    <!-- ==================== 2. SIGNUP FORM ==================== -->
+    <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4 hidden">
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1">Choose Admin Username</label>
+        <input type="text" id="regUser" placeholder="e.g., admin_somnath" class="w-full border border-slate-200 p-3.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-800" required />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1">Master Access Key (Token)</label>
+        <div class="relative">
+          <input type="password" id="regToken" placeholder="Enter company authorization code" class="w-full border border-slate-200 p-3.5 pr-12 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-800" required />
+          <button type="button" onclick="togglePassword('regToken', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 focus:outline-none text-sm font-bold">
+            SHOW
+          </button>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1">Setup New Password</label>
+        <div class="relative">
+          <input type="password" id="regPass" placeholder="Minimum 6 characters" class="w-full border border-slate-200 p-3.5 pr-12 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-800" minlength="6" required />
+          <button type="button" onclick="togglePassword('regPass', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 focus:outline-none text-sm font-bold">
+            SHOW
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-emerald-500/20 transition-all mt-2">
+        Register Admin Account
+      </button>
+      <div class="text-center text-xs pt-2">
+        <button type="button" onclick="switchView('login')" class="text-blue-600 hover:underline font-medium">Already have an account? Login</button>
+      </div>
+    </form>
+
+    <!-- ==================== 3. FORGOT PASSWORD FORM ==================== -->
+    <form id="forgotForm" onsubmit="handleForgot(event)" class="space-y-4 hidden">
+      <p class="text-xs text-gray-500 text-center bg-blue-50 p-3 rounded-xl mb-2">
+        Enter your admin username. A password reset request status will be generated.
+      </p>
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1">Your Admin Username</label>
+        <input type="text" id="forgotUser" placeholder="Enter your registered username" class="w-full border border-slate-200 p-3.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 text-slate-800" required />
+      </div>
+      <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-3.5 rounded-xl font-bold shadow-lg transition-all mt-2">
+        Request Reset Link
+      </button>
+      <div class="text-center text-xs pt-2">
+        <button type="button" onclick="switchView('login')" class="text-blue-600 hover:underline font-medium">Back to Sign In</button>
+      </div>
+    </form>
+
+    <!-- Back to Website Link -->
+    <div class="text-center mt-6 border-t border-slate-100 pt-4">
+      <a href="/" class="text-xs text-slate-400 hover:text-blue-600 transition-colors">&larr; Back to Main Website</a>
+    </div>
+
+    <!-- 5-Second Buffer Screen Overlay -->
+    <div id="bufferScreen" class="hidden absolute inset-0 bg-white flex flex-col items-center justify-center p-8 text-center z-50">
+      <div class="loader ease-linear rounded-full border-4 border-t-4 border-slate-200 h-14 w-14 mb-4"></div>
+      <h3 class="text-xl font-bold text-slate-800">Verifying Credentials...</h3>
+      <p class="text-slate-400 text-sm mt-2">Securing your admin panel workspace session.</p>
+    </div>
+
+  </div>
+
+  <script>
+    // ==================== HIDE / SHOW LOGIC FUNCTION ====================
+    function togglePassword(fieldId, button) {
+      const passwordInput = document.getElementById(fieldId);
+      
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        button.textContent = "HIDE";
+        button.classList.add("text-blue-600");
+      } else {
+        passwordInput.type = "password";
+        button.textContent = "SHOW";
+        button.classList.remove("text-blue-600");
+      }
+    }
+
+    // Tab Switching Mechanism
+    function switchView(view) {
+      const title = document.getElementById("portalTitle");
+      const subtitle = document.getElementById("portalSubtitle");
+      
+      // Hide all forms first
+      document.getElementById("loginForm").classList.add("hidden");
+      document.getElementById("signupForm").classList.add("hidden");
+      document.getElementById("forgotForm").classList.add("hidden");
+
+      // Reset all types to password when switching views for security
+      ['loginPass', 'regToken', 'regPass'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.type = 'password';
+      });
+      document.querySelectorAll("form button[type='button']").forEach(btn => btn.textContent = "SHOW");
+
+      if (view === 'login') {
+        title.innerText = "Admin Control Panel";
+        subtitle.innerText = "Somnath Engineering Dashboard Login";
+        document.getElementById("loginForm").classList.remove("hidden");
+      } else if (view === 'signup') {
+        title.innerText = "Create Admin Account";
+        subtitle.innerText = "Register new administrator permissions";
+        document.getElementById("signupForm").classList.remove("hidden");
+      } else if (view === 'forgot') {
+        title.innerText = "Account Recovery";
+        subtitle.innerText = "Reset your admin dashboard password";
+        document.getElementById("forgotForm").classList.remove("hidden");
+      }
+    }
+
+    // 1. Login Handler (With 5s buffering loading)
+    async function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById("loginUser").value;
+      const pass = document.getElementById("loginPass").value;
+
+      try {
+        const response = await fetch('/api/verify-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById("bufferScreen").classList.remove("hidden");
+          setTimeout(() => {
+            window.location.href = `/start-onboarding?username=${encodeURIComponent(user)}`;
+          }, 5000);
+        } else {
+          alert(data.message);
+          if (data.message.includes("blocked")) window.location.href = '/';
+        }
+      } catch (error) {
+        alert("Server communication error!");
+      }
+    }
+
+    // 2. Signup Action Handler 
+    async function handleSignup(e) {
+      e.preventDefault();
+      const username = document.getElementById("regUser").value;
+      const token = document.getElementById("regToken").value;
+      const password = document.getElementById("regPass").value;
+
+      alert(`Signup request received for: ${username}.\nBackend controller triggers registration logic using master token.`);
+      switchView('login');
+    }
+
+    // 3. Forgot Password Action Handler
+    async function handleForgot(e) {
+      e.preventDefault();
+      const username = document.getElementById("forgotUser").value;
+      
+      alert(`Password reset token requested for account: ${username}.\nVerification prompt will send security instructions if account exists.`);
+      switchView('login');
+    }
+  </script>
+</body>
+</html>

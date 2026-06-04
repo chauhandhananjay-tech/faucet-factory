@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Somnath Engineering | Premium Faucets Manufacturer</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #f8fafc;
+        overflow-x: hidden;
+        padding-top: 90px; 
+      }
+
+      .hero-bg {
+        background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      }
+
+      .product-card {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .product-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .glass {
+        backdrop-filter: blur(15px);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* CSS Infinite Marquee Animation loop */
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(calc(-50% - 1rem));
+        }
+      }
+
+      .animate-marquee {
+        display: flex;
+        width: max-content;
+        animation: marquee 25s linear infinite;
+      }
+
+      .animate-marquee:hover {
+        animation-play-state: paused;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="welcomePopup"
+      class="fixed inset-0 bg-black/60 flex items-center justify-center z-[9999]"
+    >
+      <div
+        class="bg-white max-w-lg w-[90%] p-8 rounded-3xl shadow-2xl text-center relative"
+      >
+        <button
+          onclick="closePopup()"
+          class="absolute top-4 right-4 text-3xl text-gray-400 hover:text-black"
+        >
+          &times;
+        </button>
+
+        <img
+          src="./img/logo.png"
+          alt="Somnath Engineering Logo"
+          class="h-20 mx-auto mb-4 object-contain"
+        />
+
+        <h2 class="text-3xl font-bold text-blue-700 mb-4">
+          Welcome to Somnath Engineering
+        </h2>
+
+        <p class="text-gray-600 mb-2 font-medium">
+          Premium Faucets & Bathroom Fittings Manufacturer
+        </p>
+
+        <p class="text-gray-500 text-sm mb-6">
+          High Quality Brass Faucets • Leak Tested • OEM Manufacturing
+        </p>
+
+        <button
+          onclick="closePopup()"
+          class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-xl font-bold transition-colors"
+        >
+          View Collection
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="productModal"
+      class="fixed inset-0 bg-black/70 hidden items-center justify-center z-[9999] backdrop-blur-sm p-4 animate-fade-in"
+    >
+      <div
+        class="bg-white max-w-2xl w-full rounded-3xl shadow-2xl overflow-hidden relative flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible"
+      >
+        <button
+          onclick="closeProductModal()"
+          class="absolute top-4 right-4 z-10 bg-slate-100 hover:bg-slate-200 text-slate-700 w-10 h-10 rounded-full text-2xl flex items-center justify-center transition-colors"
+        >
+          &times;
+        </button>
+
+        <div
+          class="md:w-1/2 bg-slate-50 p-8 flex items-center justify-center border-b md:border-b-0 md:border-r border-slate-100"
+        >
+          <img
+            id="modalProductImg"
+            src=""
+            alt=""
+            class="max-h-64 md:max-h-80 object-contain mix-blend-multiply transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+
+        <div class="md:w-1/2 p-8 flex flex-col justify-between">
+          <div>
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-blue-600"
+              >Somnath Premium</span
+            >
+            <h2
+              id="modalProductName"
+              class="text-2xl md:text-3xl font-bold text-slate-800 mt-1 mb-4"
+            ></h2>
+
+            <div class="space-y-3 text-sm border-t border-slate-100 pt-4">
+              <p class="text-slate-600">
+                <strong class="text-slate-800">Material:</strong> High-Grade
+                Industrial Brass
+              </p>
+              <p class="text-slate-600">
+                <strong class="text-slate-800">Finish:</strong> Multi-layer
+                Mirror Chrome & Anti-Rust Coating
+              </p>
+              <p class="text-slate-600">
+                <strong class="text-slate-800">Features:</strong> Eco-Smart
+                Aerator, Smooth Foam Flow, 100% Leak Tested
+              </p>
+              <p class="text-slate-600">
+                <strong class="text-slate-800">Warranty:</strong> 7 Years
+                Manufacturer Warranty
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-col gap-3">
+            <a
+              id="modalInquiryBtn"
+              href="#contact"
+              onclick="closeProductModal()"
+              class="w-full bg-blue-700 hover:bg-blue-800 text-white text-center py-3.5 rounded-xl font-bold transition-colors shadow-md"
+            >
+              Bulk Inquiry for this Item
+            </a>
+            <a
+              id="modalWhatsappBtn"
+              href=""
+              target="_blank"
+              class="w-full bg-green-500 hover:bg-green-600 text-white text-center py-3.5 rounded-xl font-bold transition-colors shadow-md flex items-center justify-center gap-2"
+            >
+              Inquiry on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav
+      class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-lg shadow-sm"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            src="./img/logo.png"
+            alt="Somnath Engineering Logo"
+            class="h-14 w-auto object-contain"
+          />
+          <h1 class="text-xl font-bold text-blue-800 tracking-tight">
+            SOMNATH ENGINEERING
+          </h1>
+        </div>
+
+        <div id="desktop-links" class="hidden md:flex gap-8 font-medium">
+          <a
+            href="#home"
+            class="nav-link text-blue-700 font-bold transition-colors"
+            >Home</a
+          >
+          <a
+            href="#products"
+            class="nav-link text-gray-600 hover:text-blue-700 transition-colors"
+            >Products</a
+          >
+          <a
+            href="#about"
+            class="nav-link text-gray-600 hover:text-blue-700 transition-colors"
+            >About</a
+          >
+          <a
+            href="#contact"
+            class="nav-link text-gray-600 hover:text-blue-700 transition-colors"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <section id="home" class="hero-bg min-h-[90vh] flex items-center py-12">
+      <div
+        class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center w-full"
+      >
+        <div class="text-white">
+          <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+            Premium Faucets & Bathroom Fittings
+          </h1>
+
+          <p class="mt-6 text-lg text-slate-300">
+            Manufacturing high quality faucets with modern engineering,
+            interactive mechanics, and premium finishing.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a
+              href="#products"
+              class="bg-white text-blue-900 hover:bg-slate-100 px-8 py-4 rounded-xl font-bold transition-colors"
+            >
+              Explore Products
+            </a>
+
+            <a
+              href="https://wa.me/918780286536"
+              target="_blank"
+              class="glass px-8 py-4 rounded-xl font-medium text-white hover:bg-white/20 transition-colors"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="w-full h-[400px] md:h-[500px] relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10 flex flex-col items-center justify-center p-8 text-center group"
+        >
+          <div
+            class="absolute inset-0 bg-blue-500/5 mix-blend-screen pointer-events-none rounded-3xl group-hover:bg-blue-500/10 transition-colors"
+          ></div>
+
+          <div class="relative flex items-center justify-center w-24 h-24 mb-6">
+            <div
+              class="absolute inset-0 rounded-full border-4 border-blue-500/20 animate-ping"
+            ></div>
+            <div
+              class="absolute inset-2 rounded-full border-4 border-t-blue-500 border-r-transparent border-b-blue-400 border-l-transparent animate-spin duration-1000"
+            ></div>
+            <span class="text-4xl">🚰</span>
+          </div>
+
+          <h3 class="text-2xl font-bold text-white tracking-wide">
+            Premium Faucet Experience
+          </h3>
+          <p class="text-sm text-slate-400 mt-2 max-w-xs leading-relaxed">
+            High-grade industrial brass layout with custom leak testing and
+            precision engineering.
+          </p>
+
+          <div
+            class="mt-6 px-4 py-1.5 rounded-full glass text-xs font-semibold text-blue-400 tracking-wider uppercase shadow-inner"
+          >
+            Production Ready
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="py-24 bg-white overflow-hidden">
+      <h2 class="text-4xl font-bold text-center mb-4 text-slate-800">
+        Our Premium Collection
+      </h2>
+      <p class="text-center text-slate-500 mb-16 text-sm">
+        Click on any product to view its manufacturing details
+      </p>
+
+      <div class="w-full">
+        <div class="animate-marquee gap-8 px-4">
+          <div
+            onclick="openProductModal('Chrome Faucet', './img/product1.jpg')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+          >
+            <img
+              src="./img/product1.jpg"
+              alt="Chrome Faucet"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Chrome Faucet</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Rose Gold Faucet', './img/product2.jpg')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+          >
+            <img
+              src="./img/product2.jpg"
+              alt="Rose Gold Faucet"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Rose Gold Faucet</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Designer Faucet', './img/product3.png')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+          >
+            <img
+              src="./img/product3.png"
+              alt="Designer Faucet"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Designer Faucet</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Luxury Mixer', './img/product4.png')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+          >
+            <img
+              src="./img/product4.png"
+              alt="Luxury Mixer"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Luxury Mixer</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Premium Tap', './img/product5.jpg')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+          >
+            <img
+              src="./img/product5.jpg"
+              alt="Premium Tap"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Premium Tap</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Chrome Faucet', './img/product1.jpg')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+            aria-hidden="true"
+          >
+            <img
+              src="./img/product1.jpg"
+              alt="Chrome Faucet"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Chrome Faucet</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Rose Gold Faucet', './img/product2.jpg')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+            aria-hidden="true"
+          >
+            <img
+              src="./img/product2.jpg"
+              alt="Rose Gold Faucet"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Rose Gold Faucet</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Designer Faucet', './img/product3.png')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+            aria-hidden="true"
+          >
+            <img
+              src="./img/product3.png"
+              alt="Designer Faucet"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Designer Faucet</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Luxury Mixer', './img/product4.png')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+            aria-hidden="true"
+          >
+            <img
+              src="./img/product4.png"
+              alt="Luxury Mixer"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Luxury Mixer</h3>
+          </div>
+
+          <div
+            onclick="openProductModal('Premium Tap', './img/product5.jpg')"
+            class="product-card bg-slate-50 p-6 rounded-3xl shadow-md border border-slate-100 min-w-[280px] text-center cursor-pointer hover:border-blue-500/30"
+            aria-hidden="true"
+          >
+            <img
+              src="./img/product5.jpg"
+              alt="Premium Tap"
+              class="h-56 mx-auto object-contain mix-blend-multiply"
+            />
+            <h3 class="mt-4 font-bold text-slate-700">Premium Tap</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-24 bg-slate-50">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-slate-800">
+          Why Choose Us?
+        </h2>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+          <a
+            href="#contact"
+            class="product-card bg-white p-6 rounded-2xl shadow-sm border border-slate-100 font-semibold text-slate-700 flex items-center gap-3 hover:border-blue-500 cursor-pointer"
+          >
+            <span class="text-green-500 text-xl">✓</span> Leak Tested
+          </a>
+
+          <a
+            href="#contact"
+            class="product-card bg-white p-6 rounded-2xl shadow-sm border border-slate-100 font-semibold text-slate-700 flex items-center gap-3 hover:border-blue-500 cursor-pointer"
+          >
+            <span class="text-green-500 text-xl">✓</span> Premium Brass
+          </a>
+
+          <a
+            href="#contact"
+            class="product-card bg-white p-6 rounded-2xl shadow-sm border border-slate-100 font-semibold text-slate-700 flex items-center gap-3 hover:border-blue-500 cursor-pointer"
+          >
+            <span class="text-green-500 text-xl">✓</span> OEM Manufacturing
+          </a>
+
+          <a
+            href="#contact"
+            class="product-card bg-white p-6 rounded-2xl shadow-sm border border-slate-100 font-semibold text-slate-700 flex items-center gap-3 hover:border-blue-500 cursor-pointer"
+          >
+            <span class="text-green-500 text-xl">✓</span> Wholesale Supply
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-24">
+      <div class="max-w-3xl mx-auto px-6">
+        <div
+          class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-100"
+        >
+          <h2 class="text-4xl font-bold mb-2 text-slate-800">Contact Us</h2>
+          <p class="text-gray-500 mb-8">
+            Submit your details and our team will get back to you shortly.
+          </p>
+
+          <form action="/submit-inquiry" method="POST" class="grid gap-5">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2"
+                >Your Name / Company Name</label
+              >
+              <input
+                type="text"
+                name="clientName"
+                placeholder="Ex: Rajesh Hardware"
+                class="w-full border border-slate-200 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                minlength="3"
+                maxlength="50"
+                required
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                name="phone"
+                placeholder="10-digit Mobile Number"
+                pattern="^[6-9]\d{9}$"
+                class="w-full border border-slate-200 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2"
+                >Location</label
+              >
+              <select
+                name="location"
+                id="locationDropdown"
+                class="w-full border border-slate-200 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                required
+              >
+                <option value="" disabled selected>Select City & State</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              class="bg-blue-700 hover:bg-blue-800 text-white py-4 rounded-xl font-bold transition-colors shadow-md mt-2"
+            >
+              Send Inquiry
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <a
+      href="https://wa.me/918780286536"
+      target="_blank"
+      class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white px-6 py-3.5 rounded-full shadow-2xl z-50 flex items-center gap-2 font-semibold transition-transform hover:scale-105"
+    >
+      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+        <path
+          d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.66.986 3.296 1.489 4.974 1.49 5.305 0 9.624-4.321 9.628-9.629.002-2.571-1.002-4.99-2.83-6.822-1.829-1.83-4.253-2.831-6.829-2.831-5.316 0-9.633 4.32-9.636 9.63-.001 1.749.462 3.453 1.343 4.966l-.417 1.523 1.57-.412zm13.116-4.933c-.27-.135-1.594-.786-1.84-.875-.247-.09-.427-.135-.607.135-.18.27-.697.875-.855 1.055-.158.18-.315.202-.586.067-.27-.135-1.143-.421-2.176-1.343-.803-.717-1.346-1.603-1.503-1.873-.158-.27-.017-.416.118-.551.121-.122.27-.315.405-.472.135-.158.18-.27.27-.45.09-.18.045-.337-.022-.472-.068-.135-.607-1.462-.832-2.003-.219-.527-.441-.456-.607-.464-.158-.008-.338-.01-.517-.01-.18 0-.472.067-.719.337-.247.27-.945.923-.945 2.25s.967 2.61 1.102 2.79c.135.18 1.902 2.904 4.609 4.074.645.278 1.148.445 1.54.57.648.206 1.238.177 1.704.107.519-.078 1.594-.652 1.819-1.282.225-.63.225-1.17.157-1.282-.067-.113-.247-.18-.517-.315z"
+        />
+      </svg>
+      WhatsApp
+    </a>
+
+    <footer class="bg-slate-900 text-white py-16">
+      <div class="max-w-6xl mx-auto text-center px-6">
+        <h3 class="text-2xl font-bold tracking-wide">SOMNATH ENGINEERING</h3>
+        <p class="text-slate-400 mt-3">
+          Premium Faucets & Bathroom Fittings Manufacturer
+        </p>
+
+        <div class="mt-6 flex flex-col items-center justify-center space-y-4">
+          
+          <a
+            href="https://www.google.com/maps/place/Somnath+ENGINEERING/@22.2510899,70.801045,17z/data=!4m6!3m5!1s0x3959ca85dd9227cf:0xfe1276d4957e84f4!8m2!3d22.2510899!4d70.801045!16s%2Fg%2F11vswm5scy"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-slate-300 hover:text-blue-400 flex items-center gap-2 group transition-colors duration-200"
+          >
+            <span class="group-hover:scale-110 transition-transform">📍</span>
+            <span
+              class="border-b border-dashed border-slate-500 group-hover:border-blue-400"
+              >Somnath Engineering, Bhakti Nagar</span
+            >
+          </a>
+
+          <a
+            href="mailto:info@somnathengineering.com?subject=Business%20Inquiry%20-%20Somnath%20Engineering"
+            class="text-slate-300 hover:text-blue-400 flex items-center gap-2 group transition-colors duration-200"
+          >
+            <span class="group-hover:scale-110 transition-transform">📧</span>
+            <span
+              class="border-b border-dashed border-slate-500 group-hover:border-blue-400"
+              >info@somnathengineering.com</span
+            >
+          </a>
+        </div>
+
+        <p class="mt-12 text-slate-500 text-sm">
+          &copy; 2026 Somnath Engineering. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function closePopup() {
+        document.getElementById("welcomePopup").style.display = "none";
+      }
+
+      // ==================== PRODUCT DETAILS MODAL JAVASCRIPT LOGIC ====================
+      function openProductModal(name, imgSrc) {
+        document.getElementById("modalProductName").textContent = name;
+        document.getElementById("modalProductImg").src = imgSrc;
+        document.getElementById("modalProductImg").alt = name;
+
+        
+        const encodedMessage = encodeURIComponent(
+          `Hello Somnath Engineering, I am interested in your product: ${name}. Please share the catalog and pricing details.`,
+        );
+        document.getElementById("modalWhatsappBtn").href =
+          `https://wa.me/918780286536?text=${encodedMessage}`;
+
+        // Show Modal
+        const modal = document.getElementById("productModal");
+        modal.style.display = "flex";
+      }
+
+      function closeProductModal() {
+        document.getElementById("productModal").style.display = "none";
+      }
+
+      // Close modal if user clicks outside the modal content box
+      window.onclick = function (event) {
+        const modal = document.getElementById("productModal");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Backend API function
+      async function loadCities() {
+        const dropdown = document.getElementById("locationDropdown");
+        try {
+          const response = await fetch("/api/cities");
+          const cities = await response.json();
+
+          cities.forEach((city) => {
+            const option = document.createElement("option");
+            option.value = city;
+            option.textContent = city;
+            dropdown.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Cities load karne me dikkat aayi:", error);
+          dropdown.innerHTML =
+            '<option value="" disabled>Failed to load cities</option>';
+        }
+      }
+
+      // ==================== NAV LINK ACTIVE SCROLL TRACKER LOGIC ====================
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      window.addEventListener("scroll", () => {
+        let currentSection = "";
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (window.scrollY >= sectionTop - 180) {
+            currentSection = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+        
+          link.classList.remove(
+            "text-blue-700",
+            "font-bold",
+            "border-b-8",
+            "border-blue-700",
+            "pb-1",
+          );
+          link.classList.add("text-gray-600");
+
+          
+          if (link.getAttribute("href") === `#${currentSection}`) {
+            link.classList.remove("text-gray-600");
+          
+            link.classList.add(
+              "text-blue-700",
+              "font-bold",
+              "border-b-2",
+              "border-blue-700",
+              "pb-1",
+            );
+          }
+        });
+      });
+
+      window.onload = function () {
+        document.getElementById("welcomePopup").style.display = "flex";
+        loadCities();
+        setTimeout(() => {
+          closePopup();
+        }, 5000);
+      };
+    </script>
+  </body>
+</html>
